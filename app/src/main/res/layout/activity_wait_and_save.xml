@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="12dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="@string/back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/wait_amp_save"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/headline" />
+
+    </LinearLayout>
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:divider="@android:color/darker_gray"
+            android:showDividers="middle">
+
+            <!-- Prediction card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:text="@string/likely_drop_65"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="@string/wait_7_12_min"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/headline"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="@string/you_could_save_2_6_on_uberx_lyft"
+                    android:textSize="14sp"
+                    android:textColor="@color/muted"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="@string/concert_nearby_light_rain_next_refresh_5_min"
+                    android:textSize="12sp"
+                    android:textColor="@color/tertiary"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Timer card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:text="@string/start_timer"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/muted"
+                    android:layout_marginBottom="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnStartTimer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_10_min_timer"
+                    android:backgroundTint="@color/primary"
+                    android:textColor="@color/on_primary" />
+
+                <Button
+                    android:id="@+id/btnChangeWindow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/change_window"
+                    android:backgroundTint="@color/tertiary"
+                    android:textColor="@color/headline" />
+            </LinearLayout>
+
+            <!-- Recent trend card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:text="@string/recent_price_trend_last_30_min"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/headline"
+                    android:layout_marginBottom="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_map_placeholder"
+                    android:contentDescription="@string/price_trend_chart" />
+            </LinearLayout>
+
+            <!-- Open app buttons -->
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="center"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/btnUber"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_uber"
+                    android:backgroundTint="@color/primary"
+                    android:textColor="@color/on_primary" />
+
+                <Button
+                    android:id="@+id/btnLyft"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/open_lyft"
+                    android:backgroundTint="@color/tertiary"
+                    android:textColor="@color/headline" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Footer -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/predictions_only_final_price_appears_in_the_provider_app"
+        android:textSize="12sp"
+        android:textColor="@color/muted"
+        android:gravity="center"
+        android:padding="8dp" />
+
+</LinearLayout>

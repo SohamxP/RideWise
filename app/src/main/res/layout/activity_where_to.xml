@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@color/background_light"
+        android:padding="8dp">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:src="@android:drawable/ic_media_previous"
+            app:tint="@color/primary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Where to?"
+            android:gravity="center"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <!-- spacer -->
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+    </LinearLayout>
+
+    <!-- MAIN FORM -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Pickup -->
+            <EditText
+                android:id="@+id/pickupInput"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Enter pickup location"
+                android:drawableLeft="@android:drawable/ic_menu_search"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:background="@drawable/input_bg"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/primary" />
+
+            <!-- Destination -->
+            <EditText
+                android:id="@+id/destinationInput"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Enter destination"
+                android:drawableLeft="@android:drawable/ic_menu_mylocation"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_bg"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/primary" />
+
+            <!-- Map Preview -->
+            <ImageView
+                android:id="@+id/mapPreview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_dialog_map"
+                android:background="@drawable/card_bg" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- FOOTER NAVIGATION -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_nav_menu"
+        android:background="@color/background_light" />
+</LinearLayout>

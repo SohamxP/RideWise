@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_logo"
+                android:contentDescription="Logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="1 INFO → 2 VERIFY → 3 READY"
+                android:textStyle="bold"
+                android:textColor="@color/muted_light"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- PROGRESS DOTS -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="20dp">
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/dot_active"
+                android:layout_margin="4dp"/>
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/dot_inactive"
+                android:layout_margin="4dp"/>
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/dot_inactive"
+                android:layout_margin="4dp"/>
+        </LinearLayout>
+
+        <!-- TITLE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign up"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_light"
+            android:layout_marginBottom="16dp" />
+
+        <!-- FORM FIELDS -->
+        <EditText
+            android:id="@+id/nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Enter your name"
+            android:inputType="textPersonName"
+            android:padding="12dp"
+            android:background="@drawable/input_bg" />
+
+        <EditText
+            android:id="@+id/emailInput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Enter your email"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:background="@drawable/input_bg"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Create a password"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:background="@drawable/input_bg"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/confirmPasswordInput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Confirm your password"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:background="@drawable/input_bg"
+            android:layout_marginTop="12dp" />
+
+        <!-- PASSWORD STRENGTH -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password strength"
+            android:textSize="12sp"
+            android:textColor="@color/muted_light"
+            android:layout_marginTop="12dp" />
+
+        <ProgressBar
+            android:id="@+id/passwordStrength"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:progress="75"
+            android:progressTint="@color/primary"
+            android:backgroundTint="@color/surface_light"
+            android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:id="@+id/passwordStrengthLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Strong"
+            android:textSize="12sp"
+            android:textColor="@color/primary"
+            android:layout_marginTop="4dp" />
+
+        <!-- ALERTS TOGGLE -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:text="Send me best-time-to-book alerts"
+                android:textSize="14sp"
+                android:textColor="@color/text_light"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                tools:ignore="Suspicious0dp" />
+
+            <Switch
+                android:id="@+id/alertsSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"/>
+        </LinearLayout>
+
+        <!-- FOOTER -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="By proceeding, you agree to our Terms of Service and Privacy Policy."
+            android:textSize="10sp"
+            android:textColor="@color/muted_light"
+            android:layout_marginTop="16dp" />
+
+        <!-- BUTTON -->
+        <Button
+            android:id="@+id/signupBtn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Create &amp; start saving"
+            android:textStyle="bold"
+            android:textColor="@color/text_light"
+            android:backgroundTint="@color/primary"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light"
+    android:orientation="vertical">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_media_previous"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/booking_confirmation"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/black" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+    </LinearLayout>
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:elevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pickup"
+                        android:textSize="12sp"
+                        android:textColor="@color/muted" />
+
+                    <TextView
+                        android:id="@+id/txtPickup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_123_main_st_anytown"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dropoff"
+                        android:textSize="12sp"
+                        android:textColor="@color/muted" />
+
+                    <TextView
+                        android:id="@+id/txtDropoff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_456_oak_ave_sometown"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgMapPreview"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/map_preview"
+                    android:src="@android:drawable/ic_dialog_map" />
+            </LinearLayout>
+
+            <!-- Trip info (Distance, Time, Ride) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/distance"
+                        android:textSize="12sp"
+                        android:textColor="@color/muted" />
+
+                    <TextView
+                        android:id="@+id/txtDistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_5_2_mi"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/time"
+                        android:textSize="12sp"
+                        android:textColor="@color/muted" />
+
+                    <TextView
+                        android:id="@+id/txtTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_18_mins"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ride"
+                        android:textSize="12sp"
+                        android:textColor="@color/muted" />
+
+                    <TextView
+                        android:id="@+id/txtRideType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/standard"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Price Comparison Info -->
+            <TextView
+                android:id="@+id/txtCheaperNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lyft_is_2_cheaper_right_now"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textColor="@color/green"
+                android:background="@color/green_light"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="8dp" />
+
+            <!-- Uber / Lyft Cards -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:layout_marginBottom="12dp">
+
+                <!-- Uber Card -->
+                <LinearLayout
+                    android:id="@+id/cardUber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@color/uber_bg"
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:elevation="3dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@android:drawable/btn_star_big_on"
+                        android:contentDescription="@string/uber" />
+
+                    <TextView
+                        android:id="@+id/txtUberPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_18_50"
+                        android:textStyle="bold"
+                        android:textSize="22sp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/eta_5_mins"
+                        android:textSize="12sp"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btnBookUber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/book_with_uber"
+                        android:textStyle="bold"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="12dp" />
+                </LinearLayout>
+
+                <!-- Lyft Card -->
+                <LinearLayout
+                    android:id="@+id/cardLyft"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@color/lyft_bg"
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:elevation="3dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@android:drawable/btn_star"
+                        android:contentDescription="@string/lyft" />
+
+                    <TextView
+                        android:id="@+id/txtLyftPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_16_50"
+                        android:textStyle="bold"
+                        android:textSize="22sp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/eta_7_mins"
+                        android:textSize="12sp"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btnBookLyft"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/book_with_lyft"
+                        android:textStyle="bold"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/lyft_bg"
+                        android:layout_marginTop="12dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Disclaimer -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/final_fares_shown_in_provider_app_predictions_only"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="@color/muted" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

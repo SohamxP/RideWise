@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <!-- Header Info -->
+    <TextView android:id="@+id/tvPickup" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Pickup  •  123 Main St" />
+    <TextView android:id="@+id/tvDropoff" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Dropoff •  456 Oak Ave" />
+    <TextView android:id="@+id/tvDistance" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Distance 5.2 mi" />
+    <TextView android:id="@+id/tvTime" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Time 18 mins" />
+    <TextView android:id="@+id/tvRide" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Ride standard" />
+
+    <!-- Banner -->
+    <TextView
+        android:id="@+id/tvBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#E0F7FA"
+        android:padding="12dp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        tools:text="Lyft is $2.00 cheaper right now" />
+
+    <!-- Comparison Cards -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <!-- Uber Card -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="#F0F0F0"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Uber" android:textStyle="bold" />
+            <TextView android:id="@+id/tvUberPrice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp" tools:text="$20.00 – $24.00" />
+            <TextView android:id="@+id/tvUberEta" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="ETA: 5 mins" />
+            <Button android:id="@+id/btnUber" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Book Uber" />
+        </LinearLayout>
+
+        <!-- Lyft Card -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:background="#F0F0F0"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lyft" android:textStyle="bold" />
+            <TextView android:id="@+id/tvLyftPrice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp" tools:text="$18.00 – $22.00" />
+            <TextView android:id="@+id/tvLyftEta" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="ETA: 7 mins" />
+            <Button android:id="@+id/btnLyft" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Book Lyft" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Disclaimer -->
+    <TextView
+        android:id="@+id/tvDisclaimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        tools:text="Demo estimates. Final fare shown in provider app." />
+
+</LinearLayout>

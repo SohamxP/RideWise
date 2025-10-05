@@ -1,0 +1,31 @@
+# This file defines the versions and aliases for all project dependencies.
+
+[versions]
+# Add all your version numbers here
+agp = "8.3.0" # Example version, use your actual version
+appcompat = "1.6.1" # Example version
+material = "1.12.0" # Example version
+activity = "1.8.0" # Example version
+constraintlayout = "2.1.4" # Example version
+junit = "4.13.2" # Example version
+ext-junit = "1.1.5" # Example version
+espresso-core = "3.5.1" # Example version
+play-services-maps = "18.2.0" # Google Maps version
+
+[libraries]
+# Define the library aliases here
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "play-services-maps" }
+
+# Test libraries
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+
+[plugins]
+# Define plugin aliases here
+android-application = { id = "com.android.application", version.ref = "agp" }
+

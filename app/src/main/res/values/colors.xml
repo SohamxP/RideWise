@@ -1,0 +1,45 @@
+<resources>
+    <!-- CORE PALETTE -->
+    <color name="primary">#3A7BD5</color>
+    <color name="secondary">#2EC5B6</color>
+    <color name="tertiary">#9AA5B1</color>
+    <color name="headline">#0F172A</color>
+    <color name="muted">#64748B</color>
+
+    <!-- BASIC COLORS -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- SURFACES -->
+    <color name="background">#F7FAFC</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="background_light">#F6F7F8</color>
+    <color name="background_dark">#101922</color>
+    <color name="surface_light">#FFFFFF</color>
+    <color name="surface_dark">#1E293B</color>
+
+    <!-- TEXT & CONTENT -->
+    <color name="on_primary">#FFFFFF</color>
+    <color name="content_light">#212121</color> <!-- Primary text -->
+    <color name="subtle_light">#888888</color>  <!-- Secondary/hint text -->
+
+    <!-- FIX: Added hex code and closing tag for text_light -->
+    <color name="text_light">#212121</color>
+
+    <!-- FIX: Corrected muted_light to a more appropriate gray -->
+    <color name="muted_light">#A0A0A0</color>
+
+    <!-- ACCENTS -->
+    <color name="success">#16A34A</color>
+    <color name="success_bg">#DCFCE7</color>
+    <color name="warning">#F59E0B</color>
+    <color name="error">#DC2626</color>
+    <color name="green">#16A34A</color>
+    <color name="green_light">#DCFCE7</color>
+
+    <!-- RIDE PROVIDERS -->
+    <color name="uber_bg">#09090B</color>
+    <color name="uber_text">#FFFFFF</color>
+    <color name="lyft_bg">#FF00BF</color>
+    <color name="lyft_text">#FFFFFF</color>
+</resources>
