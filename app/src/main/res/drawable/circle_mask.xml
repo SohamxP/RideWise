@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <!-- This makes the background of the shape transparent -->
+    <solid android:color="@android:color/transparent" />
+
+    <!-- This adds a 2dp wide white border -->
+    <stroke
+        android:width="2dp"
+        android:color="@android:color/white" />
+</shape>

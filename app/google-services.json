@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "396437803940",
+    "project_id": "ridewise-6e25c",
+    "storage_bucket": "ridewise-6e25c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396437803940:android:c8b0129ea96f420291a731",
+        "android_client_info": {
+          "package_name": "com.example.ridewise"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzkx2b3Z-rf9Tc9WPB5RmQO6BpgehvcVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

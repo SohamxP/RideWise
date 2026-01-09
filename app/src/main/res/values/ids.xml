@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="mainContent" type="id" />
+    <item name="bottomNav" type="id" />
+    <item name="tvRide" type="id" />
+</resources>
