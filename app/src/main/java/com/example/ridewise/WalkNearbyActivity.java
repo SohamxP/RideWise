@@ -5,14 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.example.ridewise.calculator.WalkNearbyCalculator;
 import com.example.ridewise.models.*;
+import com.example.ridewise.utils.DeepLinkHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 
@@ -25,6 +24,7 @@ public class WalkNearbyActivity extends AppCompatActivity {
     private WalkNearbyCalculator calculator;
     private List<WalkNearbyZone> zones;
     private FirebaseAuth auth;
+    private TripRequest tripRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,12 @@ public class WalkNearbyActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        double pickupLat = getIntent().getDoubleExtra("pickup_lat", 0.0);
+        double pickupLng = getIntent().getDoubleExtra("pickup_lng", 0.0);
+        double dropoffLat = getIntent().getDoubleExtra("dropoff_lat", 0.0);
+        double dropoffLng = getIntent().getDoubleExtra("dropoff_lng", 0.0);
+        tripRequest = new TripRequest(pickupLat, pickupLng, dropoffLat, dropoffLng);
 
         calculator = new WalkNearbyCalculator();
         auth = FirebaseAuth.getInstance();
@@ -65,14 +71,11 @@ public class WalkNearbyActivity extends AppCompatActivity {
         } else if (id == R.id.action_profile) {
             startActivity(new Intent(this, ProfileActivity.class));
             return true;
-        } else if (id == R.id.action_home) {
-            startActivity(new Intent(this, WelcomePageActivity.class));
-            return true;
-        } else if (id == R.id.action_savings) {
-            startActivity(new Intent(this, SavingsDashboardActivity.class));
-            return true;
         } else if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        } else if (id == R.id.action_home) {
+            startActivity(new Intent(this, WelcomePageActivity.class));
             return true;
         }
 
@@ -87,39 +90,29 @@ public class WalkNearbyActivity extends AppCompatActivity {
     }
 
     private void loadNearbyZones() {
-        TripRequest tripRequest = new TripRequest(32.7357, -97.1081, 32.7555, -96.7969);
         zones = calculator.findCheaperZones(tripRequest);
     }
 
     private void setupClickListeners() {
-        btnNavigate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (zones != null && !zones.isEmpty()) {
-                    WalkNearbyZone zone = zones.get(0);
-                    String uri = "google.navigation:q=" + zone.getLat() + "," + zone.getLng() + "&mode=w";
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                    intent.setPackage("com.google.android.apps.maps");
-                    startActivity(intent);
-                }
+        btnNavigate.setOnClickListener(v -> {
+            if (zones != null && !zones.isEmpty()) {
+                WalkNearbyZone zone = zones.get(0);
+                String uri = "google.navigation:q=" + zone.getLat() + "," + zone.getLng() + "&mode=w";
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                intent.setPackage("com.google.android.apps.maps");
+                startActivity(intent);
             }
         });
 
-        btnUber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(WalkNearbyActivity.this,
-                        "Opening Uber at new pickup location...",
-                        Toast.LENGTH_SHORT).show();
+        btnUber.setOnClickListener(v -> {
+            if (tripRequest != null) {
+                DeepLinkHelper.openUber(this, tripRequest);
             }
         });
 
-        btnLyft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(WalkNearbyActivity.this,
-                        "Opening Lyft at new pickup location...",
-                        Toast.LENGTH_SHORT).show();
+        btnLyft.setOnClickListener(v -> {
+            if (tripRequest != null) {
+                DeepLinkHelper.openLyft(this, tripRequest);
             }
         });
     }

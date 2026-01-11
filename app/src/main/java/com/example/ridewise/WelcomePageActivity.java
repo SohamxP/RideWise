@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -38,9 +37,14 @@ public class WelcomePageActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        // Hide Home and Ride History from menu on this screen
         MenuItem homeItem = menu.findItem(R.id.action_home);
         if (homeItem != null) {
             homeItem.setVisible(false);
+        }
+        MenuItem historyItem = menu.findItem(R.id.action_history);
+        if (historyItem != null) {
+            historyItem.setVisible(false);
         }
         return true;
     }
@@ -49,17 +53,11 @@ public class WelcomePageActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_history) {
-            startActivity(new Intent(this, SavingsDashboardActivity.class));
-            return true;
-        } else if (id == R.id.action_profile) {
+        if (id == R.id.action_profile) {
             startActivity(new Intent(this, ProfileActivity.class));
             return true;
         } else if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        } else if (id == R.id.action_savings) {
-            startActivity(new Intent(this, SavingsDashboardActivity.class));
             return true;
         }
 
@@ -95,15 +93,5 @@ public class WelcomePageActivity extends AppCompatActivity {
             Intent intent = new Intent(WelcomePageActivity.this, SavingsDashboardActivity.class);
             startActivity(intent);
         });
-    }
-
-    private void logout() {
-        auth.signOut();
-        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(this, AuthActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 }

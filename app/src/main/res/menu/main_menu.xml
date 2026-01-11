@@ -2,39 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Home -->
     <item
         android:id="@+id/action_home"
         android:title="Home"
-        android:icon="@android:drawable/ic_menu_view"
         app:showAsAction="never" />
 
-    <!-- Profile -->
     <item
         android:id="@+id/action_profile"
         android:title="Profile"
-        android:icon="@android:drawable/ic_menu_myplaces"
         app:showAsAction="never" />
 
-    <!-- Settings -->
     <item
         android:id="@+id/action_settings"
         android:title="Settings"
-        android:icon="@android:drawable/ic_menu_preferences"
         app:showAsAction="never" />
 
-    <!-- Ride History -->
     <item
         android:id="@+id/action_history"
         android:title="Ride History"
-        android:icon="@android:drawable/ic_menu_recent_history"
-        app:showAsAction="never" />
-
-    <!-- Savings -->
-    <item
-        android:id="@+id/action_savings"
-        android:title="Savings"
-        android:icon="@android:drawable/ic_menu_info_details"
         app:showAsAction="never" />
 
 </menu>

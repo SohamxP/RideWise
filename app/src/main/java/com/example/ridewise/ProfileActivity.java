@@ -57,6 +57,10 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        MenuItem profileItem = menu.findItem(R.id.action_profile);
+        if (profileItem != null) {
+            profileItem.setVisible(false);
+        }
         return true;
     }
 
@@ -68,17 +72,13 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
             return true;
         } else if (id == R.id.action_history) {
-            Intent intent = new Intent(this, SavingsDashboardActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_profile) {
-            // Already on Profile
+            startActivity(new Intent(this, SavingsDashboardActivity.class));
             return true;
         } else if (id == R.id.action_home) {
             startActivity(new Intent(this, WelcomePageActivity.class));
             return true;
-        } else if (id == R.id.action_savings) {
-            startActivity(new Intent(this, SavingsDashboardActivity.class));
+        } else if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 

@@ -66,9 +66,6 @@ public class WaitAndSaveActivity extends AppCompatActivity {
         } else if (id == R.id.action_home) {
             startActivity(new Intent(this, WelcomePageActivity.class));
             return true;
-        } else if (id == R.id.action_savings) {
-            startActivity(new Intent(this, SavingsDashboardActivity.class));
-            return true;
         } else if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
