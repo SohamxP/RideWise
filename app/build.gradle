@@ -21,6 +21,7 @@ android {
             properties.load(rootProject.file('local.properties').newDataInputStream())
         }
         manifestPlaceholders = [MAPS_API_KEY: properties.getProperty('MAPS_API_KEY', '')]
+        buildConfigField 'String', 'BACKEND_BASE_URL', '"' + properties.getProperty('BACKEND_BASE_URL', 'http://10.0.2.2:8000/') + '"'
     }
 
     buildTypes {
@@ -28,6 +29,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     compileOptions {
