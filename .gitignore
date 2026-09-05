@@ -30,5 +30,6 @@ backend/data/*.parquet
 backend/data/*.csv
 backend/ml/artifacts/*.joblib
 backend/ml/artifacts/*.json
+backend/data/taxi_zones/
 !backend/ml/artifacts/.gitkeep
 .vscode/

@@ -8,3 +8,8 @@ xgboost==3.0.4
 joblib==1.5.2
 pytest==8.4.1
 httpx==0.28.1
+geopandas
+shapely
+pyogrio
+httpx
+python-dotenv

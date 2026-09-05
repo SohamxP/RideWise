@@ -1,0 +1,6 @@
+.venv
+__pycache__
+*.pyc
+.env
+data/fhvhv_tripdata_2025-01.parquet
+.git
