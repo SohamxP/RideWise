@@ -4,3 +4,4 @@ __pycache__
 .env
 data/fhvhv_tripdata_2025-01.parquet
 .git
+data/taxi_zones/

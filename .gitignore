@@ -28,8 +28,11 @@ htmlcov/
 # ML data / model artifacts
 backend/data/*.parquet
 backend/data/*.csv
-backend/ml/artifacts/*.joblib
-backend/ml/artifacts/*.json
+
+# Large raw training data
+backend/data/*.parquet
+backend/data/*.csv
+
+# Taxi zones are downloaded during setup
 backend/data/taxi_zones/
-!backend/ml/artifacts/.gitkeep
 .vscode/
