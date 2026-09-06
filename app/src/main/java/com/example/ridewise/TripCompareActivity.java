@@ -21,14 +21,12 @@ import com.example.ridewise.network.dto.ProviderPrediction;
 import com.example.ridewise.network.dto.RouteInfo;
 import com.example.ridewise.repository.RideRepository;
 import com.example.ridewise.utils.DeepLinkHelper;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class TripCompareActivity extends AppCompatActivity {
 
@@ -51,14 +49,12 @@ public class TripCompareActivity extends AppCompatActivity {
 
     private TripRequest tripRequest;
 
-    private FirebaseAuth auth;
     private RideRepository repository;
 
     private ProviderPrediction uberPrediction;
     private ProviderPrediction lyftPrediction;
 
     private RouteInfo routeInfo;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +69,6 @@ public class TripCompareActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        auth = FirebaseAuth.getInstance();
         repository = new RideRepository();
 
         double pickupLat =
@@ -124,7 +119,6 @@ public class TripCompareActivity extends AppCompatActivity {
         analyzeTrip();
     }
 
-
     private void initViews() {
 
         tvPickup = findViewById(R.id.tvPickup);
@@ -164,7 +158,6 @@ public class TripCompareActivity extends AppCompatActivity {
         setLoadingState();
     }
 
-
     private void setLoadingState() {
 
         tvUberPrice.setText("Analyzing...");
@@ -193,8 +186,8 @@ public class TripCompareActivity extends AppCompatActivity {
         btnUber.setEnabled(false);
         btnLyft.setEnabled(false);
         btnWaitSave.setEnabled(false);
+        btnWalkNearby.setEnabled(false);
     }
-
 
     private void analyzeTrip() {
 
@@ -233,7 +226,6 @@ public class TripCompareActivity extends AppCompatActivity {
                                 );
                             }
 
-
                             @Override
                             public void onFailure(
                                     Call<AnalyzeTripResponse> call,
@@ -249,7 +241,6 @@ public class TripCompareActivity extends AppCompatActivity {
                         }
                 );
     }
-
 
     private void handleAnalysisResponse(
             AnalyzeTripResponse response
@@ -299,7 +290,6 @@ public class TripCompareActivity extends AppCompatActivity {
 
         updateUI();
     }
-
 
     private void updateUI() {
 
@@ -386,8 +376,8 @@ public class TripCompareActivity extends AppCompatActivity {
         btnUber.setEnabled(true);
         btnLyft.setEnabled(true);
         btnWaitSave.setEnabled(true);
+        btnWalkNearby.setEnabled(true);
     }
-
 
     private void showAnalysisError(
             String message
@@ -411,6 +401,7 @@ public class TripCompareActivity extends AppCompatActivity {
         btnUber.setEnabled(false);
         btnLyft.setEnabled(false);
         btnWaitSave.setEnabled(false);
+        btnWalkNearby.setEnabled(false);
 
         Toast.makeText(
                 this,
@@ -418,7 +409,6 @@ public class TripCompareActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG
         ).show();
     }
-
 
     private void setupClickListeners() {
 
@@ -439,7 +429,6 @@ public class TripCompareActivity extends AppCompatActivity {
             );
         });
 
-
         btnLyft.setOnClickListener(v -> {
 
             if (lyftPrediction == null) {
@@ -457,8 +446,6 @@ public class TripCompareActivity extends AppCompatActivity {
             );
         });
 
-
-        // REAL ML WAIT & SAVE
         btnWaitSave.setOnClickListener(v -> {
 
             Intent intent =
@@ -467,51 +454,59 @@ public class TripCompareActivity extends AppCompatActivity {
                             WaitAndSaveActivity.class
                     );
 
-            intent.putExtra(
-                    "pickup_lat",
-                    tripRequest.getPickupLat()
-            );
-
-            intent.putExtra(
-                    "pickup_lng",
-                    tripRequest.getPickupLng()
-            );
-
-            intent.putExtra(
-                    "dropoff_lat",
-                    tripRequest.getDropoffLat()
-            );
-
-            intent.putExtra(
-                    "dropoff_lng",
-                    tripRequest.getDropoffLng()
-            );
-
-            intent.putExtra(
-                    "pickup_address",
-                    tripRequest.getPickupAddress()
-            );
-
-            intent.putExtra(
-                    "dropoff_address",
-                    tripRequest.getDropoffAddress()
-            );
+            putTripExtras(intent);
 
             startActivity(intent);
         });
 
-
-        // Still disabled until rebuilt with real routing logic.
         btnWalkNearby.setOnClickListener(v -> {
 
-            Toast.makeText(
-                    TripCompareActivity.this,
-                    "Walk Nearby is being upgraded with route intelligence.",
-                    Toast.LENGTH_SHORT
-            ).show();
+            Intent intent =
+                    new Intent(
+                            TripCompareActivity.this,
+                            WalkNearbyActivity.class
+                    );
+
+            putTripExtras(intent);
+
+            startActivity(intent);
         });
     }
 
+    private void putTripExtras(
+            Intent intent
+    ) {
+
+        intent.putExtra(
+                "pickup_lat",
+                tripRequest.getPickupLat()
+        );
+
+        intent.putExtra(
+                "pickup_lng",
+                tripRequest.getPickupLng()
+        );
+
+        intent.putExtra(
+                "dropoff_lat",
+                tripRequest.getDropoffLat()
+        );
+
+        intent.putExtra(
+                "dropoff_lng",
+                tripRequest.getDropoffLng()
+        );
+
+        intent.putExtra(
+                "pickup_address",
+                tripRequest.getPickupAddress()
+        );
+
+        intent.putExtra(
+                "dropoff_address",
+                tripRequest.getDropoffAddress()
+        );
+    }
 
     private void saveRideToFirebase(
             RideProvider provider,
@@ -597,7 +592,6 @@ public class TripCompareActivity extends AppCompatActivity {
                         ).show();
                     }
 
-
                     @Override
                     public void onError(
                             String error
@@ -614,7 +608,6 @@ public class TripCompareActivity extends AppCompatActivity {
         );
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(
             Menu menu
@@ -627,7 +620,6 @@ public class TripCompareActivity extends AppCompatActivity {
 
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(

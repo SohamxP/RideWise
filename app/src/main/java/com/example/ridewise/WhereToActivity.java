@@ -52,6 +52,13 @@ public class WhereToActivity extends AppCompatActivity {
         }
 
         String apiKey = getApiKeyFromManifest();
+        android.util.Log.d(
+                "RideWiseKeyCheck",
+                "API key present: "
+                        + (!apiKey.isEmpty())
+                        + ", length: "
+                        + apiKey.length()
+        );
         placesHelper = new GooglePlacesHelper(this, apiKey);
 
         prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
