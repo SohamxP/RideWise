@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,11 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/background"
-        app:title="@string/wait_amp_save"
+        app:title="Wait &amp; Save"
         app:titleTextColor="@color/headline"
         app:navigationIcon="@android:drawable/ic_menu_revert" />
 
-    <!-- Scrollable content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -25,155 +26,145 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:divider="@android:color/darker_gray"
-            android:showDividers="middle">
+            android:orientation="vertical">
 
-            <!-- Prediction card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/input_bg"
                 android:orientation="vertical"
+                android:background="@drawable/input_bg"
                 android:padding="16dp"
                 android:layout_marginBottom="16dp">
 
                 <TextView
-                    android:text="@string/likely_drop_65"
+                    android:id="@+id/tvRecommendationLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Analyzing historical ride patterns..."
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:textColor="@color/secondary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/secondary" />
 
                 <TextView
-                    android:text="@string/wait_7_12_min"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/headline"
-                    android:layout_marginTop="8dp"
+                    android:id="@+id/tvRecommendation"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:text="@string/you_could_save_2_6_on_uberx_lyft"
-                    android:textSize="14sp"
-                    android:textColor="@color/muted"
-                    android:layout_marginTop="4dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:text="@string/concert_nearby_light_rain_next_refresh_5_min"
-                    android:textSize="12sp"
-                    android:textColor="@color/tertiary"
-                    android:layout_marginTop="6dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <!-- Timer card -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_bg"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:gravity="center_horizontal"
-                android:layout_marginBottom="16dp">
-
-                <TextView
-                    android:text="@string/start_timer"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/muted"
-                    android:layout_marginBottom="12dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/btnStartTimer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/start_10_min_timer"
-                    android:backgroundTint="@color/primary"
-                    android:textColor="@color/on_primary" />
-
-                <Button
-                    android:id="@+id/btnChangeWindow"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@string/change_window"
-                    android:backgroundTint="@color/tertiary"
+                    android:text="Please wait"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
                     android:textColor="@color/headline" />
+
+                <TextView
+                    android:id="@+id/tvSavings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Calculating potential savings..."
+                    android:textSize="15sp"
+                    android:textColor="@color/muted" />
+
+                <TextView
+                    android:id="@+id/tvExplanation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Based on historical NYC TLC ride patterns."
+                    android:textSize="12sp"
+                    android:textColor="@color/tertiary" />
+
             </LinearLayout>
 
-            <!-- Recent trend card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/input_bg"
                 android:orientation="vertical"
+                android:background="@drawable/input_bg"
                 android:padding="16dp"
                 android:layout_marginBottom="16dp">
 
                 <TextView
-                    android:text="@string/recent_price_trend_last_30_min"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/headline"
-                    android:layout_marginBottom="12dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="Predicted fare windows"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/headline" />
 
-                <ImageView
+                <TextView
+                    android:id="@+id/tvCurrentOption"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_map_placeholder"
-                    android:contentDescription="@string/price_trend_chart" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Now: loading..."
+                    android:textSize="15sp"
+                    android:textColor="@color/muted" />
+
+                <TextView
+                    android:id="@+id/tv30Option"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="+30 min: loading..."
+                    android:textSize="15sp"
+                    android:textColor="@color/muted" />
+
+                <TextView
+                    android:id="@+id/tv60Option"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="+60 min: loading..."
+                    android:textSize="15sp"
+                    android:textColor="@color/muted" />
+
+                <TextView
+                    android:id="@+id/tv90Option"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="+90 min: loading..."
+                    android:textSize="15sp"
+                    android:textColor="@color/muted" />
+
             </LinearLayout>
 
-            <!-- Open app buttons -->
             <LinearLayout
-                style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2"
-                android:gravity="center"
                 android:layout_marginBottom="16dp">
 
                 <Button
                     android:id="@+id/btnUber"
-                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="@string/open_uber"
+                    android:layout_weight="1"
+                    android:text="Open Uber"
                     android:backgroundTint="@color/primary"
                     android:textColor="@color/on_primary" />
 
                 <Button
                     android:id="@+id/btnLyft"
-                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:text="@string/open_lyft"
+                    android:text="Open Lyft"
                     android:backgroundTint="@color/tertiary"
                     android:textColor="@color/headline" />
+
             </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
 
-    <!-- Footer -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/predictions_only_final_price_appears_in_the_provider_app"
+        android:text="Historical ML estimates only. Final prices appear in the provider app."
         android:textSize="12sp"
         android:textColor="@color/muted"
         android:gravity="center"

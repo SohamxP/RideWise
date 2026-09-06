@@ -69,11 +69,8 @@ public class TripCompareActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar()
-                    .setDisplayHomeAsUpEnabled(true);
-
-            getSupportActionBar()
-                    .setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         auth = FirebaseAuth.getInstance();
@@ -124,7 +121,6 @@ public class TripCompareActivity extends AppCompatActivity {
 
         initViews();
         setupClickListeners();
-
         analyzeTrip();
     }
 
@@ -150,7 +146,6 @@ public class TripCompareActivity extends AppCompatActivity {
 
         btnWaitSave = findViewById(R.id.btnWaitSave);
         btnWalkNearby = findViewById(R.id.btnWalkNearby);
-
 
         if (tripRequest.getPickupAddress() != null) {
             tvPickup.setText(
@@ -197,6 +192,7 @@ public class TripCompareActivity extends AppCompatActivity {
 
         btnUber.setEnabled(false);
         btnLyft.setEnabled(false);
+        btnWaitSave.setEnabled(false);
     }
 
 
@@ -275,7 +271,6 @@ public class TripCompareActivity extends AppCompatActivity {
             return;
         }
 
-
         for (ProviderPrediction prediction : predictions) {
 
             if ("uber".equalsIgnoreCase(
@@ -292,7 +287,6 @@ public class TripCompareActivity extends AppCompatActivity {
             }
         }
 
-
         if (uberPrediction == null
                 || lyftPrediction == null) {
 
@@ -303,13 +297,11 @@ public class TripCompareActivity extends AppCompatActivity {
             return;
         }
 
-        updateUI(response);
+        updateUI();
     }
 
 
-    private void updateUI(
-            AnalyzeTripResponse response
-    ) {
+    private void updateUI() {
 
         tvDistance.setText(
                 String.format(
@@ -324,7 +316,6 @@ public class TripCompareActivity extends AppCompatActivity {
                         routeInfo.getTripMinutes()
                 )
         );
-
 
         tvUberPrice.setText(
                 String.format(
@@ -341,7 +332,6 @@ public class TripCompareActivity extends AppCompatActivity {
                 )
         );
 
-
         tvLyftPrice.setText(
                 String.format(
                         "$%.2f",
@@ -357,7 +347,6 @@ public class TripCompareActivity extends AppCompatActivity {
                 )
         );
 
-
         double uberFare =
                 uberPrediction.getEstimatedFare();
 
@@ -368,7 +357,6 @@ public class TripCompareActivity extends AppCompatActivity {
                 Math.abs(
                         uberFare - lyftFare
                 );
-
 
         if (difference < 1.0) {
 
@@ -395,9 +383,9 @@ public class TripCompareActivity extends AppCompatActivity {
             );
         }
 
-
         btnUber.setEnabled(true);
         btnLyft.setEnabled(true);
+        btnWaitSave.setEnabled(true);
     }
 
 
@@ -422,6 +410,7 @@ public class TripCompareActivity extends AppCompatActivity {
 
         btnUber.setEnabled(false);
         btnLyft.setEnabled(false);
+        btnWaitSave.setEnabled(false);
 
         Toast.makeText(
                 this,
@@ -448,12 +437,6 @@ public class TripCompareActivity extends AppCompatActivity {
                     TripCompareActivity.this,
                     tripRequest
             );
-
-            Toast.makeText(
-                    TripCompareActivity.this,
-                    "Opening Uber...",
-                    Toast.LENGTH_SHORT
-            ).show();
         });
 
 
@@ -472,40 +455,61 @@ public class TripCompareActivity extends AppCompatActivity {
                     TripCompareActivity.this,
                     tripRequest
             );
-
-            Toast.makeText(
-                    TripCompareActivity.this,
-                    "Opening Lyft...",
-                    Toast.LENGTH_SHORT
-            ).show();
         });
 
 
-        /*
-         * These two existing features still use heuristic/random logic.
-         *
-         * We temporarily stop presenting them as functional intelligence
-         * until we rebuild them using the new backend.
-         */
+        // REAL ML WAIT & SAVE
+        btnWaitSave.setOnClickListener(v -> {
 
-        btnWaitSave.setOnClickListener(v ->
+            Intent intent =
+                    new Intent(
+                            TripCompareActivity.this,
+                            WaitAndSaveActivity.class
+                    );
 
-                Toast.makeText(
-                        TripCompareActivity.this,
-                        "Wait & Save is being upgraded to use ML predictions.",
-                        Toast.LENGTH_SHORT
-                ).show()
-        );
+            intent.putExtra(
+                    "pickup_lat",
+                    tripRequest.getPickupLat()
+            );
+
+            intent.putExtra(
+                    "pickup_lng",
+                    tripRequest.getPickupLng()
+            );
+
+            intent.putExtra(
+                    "dropoff_lat",
+                    tripRequest.getDropoffLat()
+            );
+
+            intent.putExtra(
+                    "dropoff_lng",
+                    tripRequest.getDropoffLng()
+            );
+
+            intent.putExtra(
+                    "pickup_address",
+                    tripRequest.getPickupAddress()
+            );
+
+            intent.putExtra(
+                    "dropoff_address",
+                    tripRequest.getDropoffAddress()
+            );
+
+            startActivity(intent);
+        });
 
 
-        btnWalkNearby.setOnClickListener(v ->
+        // Still disabled until rebuilt with real routing logic.
+        btnWalkNearby.setOnClickListener(v -> {
 
-                Toast.makeText(
-                        TripCompareActivity.this,
-                        "Walk Nearby is being upgraded with route intelligence.",
-                        Toast.LENGTH_SHORT
-                ).show()
-        );
+            Toast.makeText(
+                    TripCompareActivity.this,
+                    "Walk Nearby is being upgraded with route intelligence.",
+                    Toast.LENGTH_SHORT
+            ).show();
+        });
     }
 
 
@@ -521,13 +525,11 @@ public class TripCompareActivity extends AppCompatActivity {
             return;
         }
 
-
         double uberPrice =
                 uberPrediction.getEstimatedFare();
 
         double lyftPrice =
                 lyftPrediction.getEstimatedFare();
-
 
         double comparisonBaseline =
                 Math.max(
@@ -535,14 +537,12 @@ public class TripCompareActivity extends AppCompatActivity {
                         lyftPrice
                 );
 
-
         double predictedSavings =
                 Math.max(
                         0.0,
                         comparisonBaseline
                                 - predictedPrice
                 );
-
 
         RideHistory ride =
                 new RideHistory();
@@ -580,7 +580,6 @@ public class TripCompareActivity extends AppCompatActivity {
         ride.setDate(
                 System.currentTimeMillis()
         );
-
 
         repository.saveRideHistory(
                 ride,

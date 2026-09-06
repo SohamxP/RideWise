@@ -27,6 +27,48 @@ class RouteService:
         dropoff_lat: float,
         dropoff_lon: float,
     ) -> dict:
+        """
+        Traffic-aware driving route.
+        """
+
+        return await self._compute_route(
+            pickup_lat=pickup_lat,
+            pickup_lon=pickup_lon,
+            dropoff_lat=dropoff_lat,
+            dropoff_lon=dropoff_lon,
+            travel_mode="DRIVE",
+            traffic_aware=True,
+        )
+
+    async def get_walking_route(
+        self,
+        pickup_lat: float,
+        pickup_lon: float,
+        dropoff_lat: float,
+        dropoff_lon: float,
+    ) -> dict:
+        """
+        Walking route between two nearby points.
+        """
+
+        return await self._compute_route(
+            pickup_lat=pickup_lat,
+            pickup_lon=pickup_lon,
+            dropoff_lat=dropoff_lat,
+            dropoff_lon=dropoff_lon,
+            travel_mode="WALK",
+            traffic_aware=False,
+        )
+
+    async def _compute_route(
+        self,
+        pickup_lat: float,
+        pickup_lon: float,
+        dropoff_lat: float,
+        dropoff_lon: float,
+        travel_mode: str,
+        traffic_aware: bool,
+    ) -> dict:
 
         payload = {
             "origin": {
@@ -45,12 +87,14 @@ class RouteService:
                     }
                 }
             },
-            "travelMode": "DRIVE",
-            "routingPreference": "TRAFFIC_AWARE",
+            "travelMode": travel_mode,
             "computeAlternativeRoutes": False,
             "languageCode": "en-US",
             "units": "IMPERIAL",
         }
+
+        if traffic_aware:
+            payload["routingPreference"] = "TRAFFIC_AWARE"
 
         headers = {
             "Content-Type": "application/json",
@@ -79,7 +123,7 @@ class RouteService:
 
         if not routes:
             raise ValueError(
-                "Google Routes returned no drivable route."
+                f"Google Routes returned no {travel_mode.lower()} route."
             )
 
         route = routes[0]
@@ -99,18 +143,30 @@ class RouteService:
         )
 
         return {
-            "trip_miles": round(trip_miles, 2),
-            "trip_minutes": round(trip_minutes, 1),
-            "distance_meters": distance_meters,
-            "duration_seconds": duration_seconds,
+            "trip_miles": round(
+                trip_miles,
+                2,
+            ),
+            "trip_minutes": round(
+                trip_minutes,
+                1,
+            ),
+            "distance_meters": int(
+                distance_meters
+            ),
+            "duration_seconds": round(
+                duration_seconds,
+                1,
+            ),
         }
 
     @staticmethod
     def _parse_duration(
         duration: str,
     ) -> float:
-        # Google returns values such as "2134s"
-        return float(duration.rstrip("s"))
+        return float(
+            duration.rstrip("s")
+        )
 
 
 route_service = RouteService()
