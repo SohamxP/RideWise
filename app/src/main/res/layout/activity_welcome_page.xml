@@ -1,119 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_light">
+    android:background="@color/background">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/background_light"
+        android:layout_height="64dp"
+        android:background="@color/background"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:title="@string/app_name"
-        app:titleTextColor="@color/primary" />
+        app:titleTextColor="@color/headline"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Title" />
 
-    <!-- Main Content Container -->
-    <LinearLayout
-        android:id="@+id/mainContent"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="24dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-        <!-- App Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ridewise"
-            android:textSize="48sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Tagline -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/smart_ride_comparison"
-            android:textSize="18sp"
-            android:textColor="@color/muted"
-            android:layout_marginBottom="48dp" />
-
-        <!-- Welcome Message -->
-        <TextView
-            android:id="@+id/welcomeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/welcome_back_mark"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/headline"
-            android:layout_marginBottom="32dp" />
-
-        <!-- Start Ride Button -->
-        <Button
-            android:id="@+id/startRideBtn"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="@string/find_a_ride"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:backgroundTint="@color/primary"
-            android:textColor="@color/white"
-            android:layout_marginBottom="16dp" />
-
-        <!-- View History Button -->
-        <Button
-            android:id="@+id/viewHistoryBtn"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="@string/view_ride_history"
-            android:textSize="18sp"
-            android:backgroundTint="@color/secondary"
-            android:textColor="@color/white" />
-
-        <!-- Features List -->
         <LinearLayout
+            android:id="@+id/mainContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="48dp">
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="28dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/compare_uber_lyft_amp_taxis"
-                android:textSize="16sp"
+                android:text="RideWise"
+                android:textColor="@color/primary"
+                android:textSize="38sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Smarter ride decisions using routing data and historical ML estimates."
                 android:textColor="@color/muted"
-                android:layout_marginBottom="8dp" />
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="Welcome back"
+                android:textColor="@color/headline"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/startRideBtn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="22dp"
+                android:backgroundTint="@color/primary"
+                android:text="Compare a Ride"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/viewHistoryBtn"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/surface"
+                android:text="View Trip History"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/wait_amp_save_predictions"
-                android:textSize="16sp"
+                android:layout_marginTop="34dp"
+                android:text="What RideWise can do"
+                android:textColor="@color/headline"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_surface"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Compare Uber and Lyft historical fare estimates"
+                    android:textColor="@color/body_text"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@color/divider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Check whether historical patterns favor riding now or waiting"
+                    android:textColor="@color/body_text"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@color/divider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Evaluate nearby pickup alternatives using real walking and driving routes"
+                    android:textColor="@color/body_text"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@color/divider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Review previous comparisons and estimated savings"
+                    android:textColor="@color/body_text"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:text="Fare predictions are historical estimates and are currently calibrated for NYC."
                 android:textColor="@color/muted"
-                android:layout_marginBottom="8dp" />
+                android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/walk_nearby_suggestions"
-                android:textSize="16sp"
-                android:textColor="@color/muted"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/track_your_savings"
-                android:textSize="16sp"
-                android:textColor="@color/muted" />
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

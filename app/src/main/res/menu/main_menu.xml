@@ -19,7 +19,7 @@
 
     <item
         android:id="@+id/action_history"
-        android:title="Ride History"
+        android:title="Trip History"
         app:showAsAction="never" />
 
 </menu>

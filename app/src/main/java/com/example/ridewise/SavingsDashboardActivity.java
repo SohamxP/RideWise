@@ -5,26 +5,34 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Spinner;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.ridewise.models.RideHistory;
 import com.example.ridewise.repository.RideRepository;
-import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SavingsDashboardActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private Spinner filterSpinner;
+
+    private LinearLayout historyContent;
+    private LinearLayout emptyStateContainer;
+
+    private TextView totalTripsText;
     private TextView totalSavingsText;
-    private TextView emptyStateText;
-    private FirebaseAuth auth;
+
+    private Button btnCompareRide;
+
     private RideRepository repository;
     private List<RideHistory> rideHistory;
 
@@ -35,6 +43,7 @@ public class SavingsDashboardActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -42,104 +51,218 @@ public class SavingsDashboardActivity extends AppCompatActivity {
 
         rideHistory = new ArrayList<>();
         repository = new RideRepository();
-        auth = FirebaseAuth.getInstance();
 
         initViews();
+        setupClickListeners();
         loadRideHistory();
     }
 
+    private void initViews() {
+
+        recyclerView =
+                findViewById(R.id.rideHistoryRecyclerView);
+
+        historyContent =
+                findViewById(R.id.historyContent);
+
+        emptyStateContainer =
+                findViewById(R.id.emptyStateContainer);
+
+        totalTripsText =
+                findViewById(R.id.totalTripsText);
+
+        totalSavingsText =
+                findViewById(R.id.totalSavingsText);
+
+        btnCompareRide =
+                findViewById(R.id.btnCompareRide);
+
+        recyclerView.setLayoutManager(
+                new LinearLayoutManager(this)
+        );
+    }
+
+    private void setupClickListeners() {
+
+        btnCompareRide.setOnClickListener(v -> {
+
+            Intent intent =
+                    new Intent(
+                            SavingsDashboardActivity.this,
+                            WhereToActivity.class
+                    );
+
+            startActivity(intent);
+        });
+    }
+
+    private void loadRideHistory() {
+
+        repository.getRideHistory(
+                50,
+                new RideRepository.LoadCallback() {
+
+                    @Override
+                    public void onSuccess(
+                            List<RideHistory> rides
+                    ) {
+
+                        rideHistory = rides;
+
+                        setupRecyclerView();
+                        updateSummary();
+                        updateVisibility();
+                    }
+
+                    @Override
+                    public void onError(
+                            String error
+                    ) {
+
+                        rideHistory = new ArrayList<>();
+
+                        setupRecyclerView();
+                        updateVisibility();
+
+                        Toast.makeText(
+                                SavingsDashboardActivity.this,
+                                "Could not load trip history",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
+        );
+    }
+
+    private void setupRecyclerView() {
+
+        RideHistoryAdapter adapter =
+                new RideHistoryAdapter(
+                        rideHistory
+                );
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void updateSummary() {
+
+        double totalEstimatedSavings = 0.0;
+
+        for (RideHistory ride : rideHistory) {
+
+            totalEstimatedSavings +=
+                    ride.getSavings();
+        }
+
+        totalTripsText.setText(
+                String.valueOf(
+                        rideHistory.size()
+                )
+        );
+
+        totalSavingsText.setText(
+                String.format(
+                        "$%.2f",
+                        totalEstimatedSavings
+                )
+        );
+    }
+
+    private void updateVisibility() {
+
+        if (rideHistory == null
+                || rideHistory.isEmpty()) {
+
+            historyContent.setVisibility(
+                    View.GONE
+            );
+
+            emptyStateContainer.setVisibility(
+                    View.VISIBLE
+            );
+
+        } else {
+
+            historyContent.setVisibility(
+                    View.VISIBLE
+            );
+
+            emptyStateContainer.setVisibility(
+                    View.GONE
+            );
+        }
+    }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+    public boolean onCreateOptionsMenu(
+            Menu menu
+    ) {
+
+        getMenuInflater().inflate(
+                R.menu.main_menu,
+                menu
+        );
+
+        MenuItem historyItem =
+                menu.findItem(
+                        R.id.action_history
+                );
+
+        if (historyItem != null) {
+            historyItem.setVisible(false);
+        }
+
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(
+            MenuItem item
+    ) {
+
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
+
             finish();
             return true;
-        } else if (id == R.id.action_history) {
-            // Already on Savings/History
-            return true;
+
         } else if (id == R.id.action_profile) {
-            startActivity(new Intent(this, ProfileActivity.class));
+
+            startActivity(
+                    new Intent(
+                            this,
+                            ProfileActivity.class
+                    )
+            );
+
             return true;
+
         } else if (id == R.id.action_home) {
-            startActivity(new Intent(this, WelcomePageActivity.class));
+
+            startActivity(
+                    new Intent(
+                            this,
+                            WelcomePageActivity.class
+                    )
+            );
+
             return true;
+
         } else if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+
+            startActivity(
+                    new Intent(
+                            this,
+                            SettingsActivity.class
+                    )
+            );
+
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void initViews() {
-        recyclerView = findViewById(R.id.rideHistoryRecyclerView);
-        filterSpinner = findViewById(R.id.filterSpinner);
-
-        // Add header to show total savings (you can add this to XML)
-        totalSavingsText = new TextView(this);
-        totalSavingsText.setTextSize(18);
-        totalSavingsText.setPadding(16, 16, 16, 16);
-        totalSavingsText.setTextColor(getColor(R.color.primary));
-
-        emptyStateText = new TextView(this);
-        emptyStateText.setText("No rides yet! Book your first ride to start saving.");
-        emptyStateText.setTextSize(16);
-        emptyStateText.setTextColor(getColor(R.color.muted));
-        emptyStateText.setVisibility(View.GONE);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void loadRideHistory() {
-        repository.getRideHistory(50, new RideRepository.LoadCallback() {
-            @Override
-            public void onSuccess(List<RideHistory> rides) {
-                rideHistory = rides;
-                setupRecyclerView();
-                calculateTotalSavings(rides);
-            }
-
-            @Override
-            public void onError(String error) {
-                Toast.makeText(SavingsDashboardActivity.this,
-                        "Error loading history: " + error,
-                        Toast.LENGTH_SHORT).show();
-                setupRecyclerView(); // Show empty state
-            }
-        });
-    }
-
-    private void setupRecyclerView() {
-        RideHistoryAdapter adapter = new RideHistoryAdapter(rideHistory);
-        recyclerView.setAdapter(adapter);
-
-        if (rideHistory.isEmpty()) {
-            emptyStateText.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            emptyStateText.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void calculateTotalSavings(List<RideHistory> rides) {
-        double totalSavings = 0;
-        int totalRides = rides.size();
-
-        for (RideHistory ride : rides) {
-            totalSavings += ride.getSavings();
-        }
-
-        String savingsText = String.format("Total Savings: $%.2f\nTotal Rides: %d",
-                totalSavings, totalRides);
-
-        Toast.makeText(this, savingsText, Toast.LENGTH_LONG).show();
+        return super.onOptionsItemSelected(
+                item
+        );
     }
 }

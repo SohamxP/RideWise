@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_light"
+    android:background="@color/background"
     tools:context=".TripCompareActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/background_light"
+        android:layout_height="64dp"
+        android:background="@color/background"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:navigationIcon="@drawable/ic_arrow_back"
         app:title="@string/compare_rides"
-        app:titleTextColor="@color/primary"
-        app:navigationIcon="@android:drawable/ic_menu_revert" />
+        app:titleTextColor="@color/headline"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Title" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,64 +31,159 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="24dp">
 
-            <!-- Header Info -->
-            <TextView
-                android:id="@+id/tvPickup"
-                android:layout_width="wrap_content"
+            <!-- Route summary -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Pick Up" />
-            <TextView android:id="@+id/tvDropoff" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Dropoff •  456 Oak Ave" />
-            <TextView android:id="@+id/tvDistance" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Distance 5.2 mi" />
-            <TextView android:id="@+id/tvTime" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Time 18 mins" />
-            <TextView android:id="@+id/tvRide" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Ride standard" />
+                android:orientation="vertical"
+                android:background="@drawable/card_surface"
+                android:padding="16dp">
 
-            <!-- Banner -->
+                <TextView
+                    android:id="@+id/tvPickup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/headline"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Pickup • Times Square, New York" />
+
+                <TextView
+                    android:id="@+id/tvDropoff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/headline"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Dropoff • JFK Airport" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvDistance"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/body_text"
+                        android:textSize="14sp"
+                        tools:text="Distance: 17.2 mi" />
+
+                    <TextView
+                        android:id="@+id/tvTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textColor="@color/body_text"
+                        android:textSize="14sp"
+                        tools:text="Traffic-aware time: 37 mins" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvRide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:text="Ride standard" />
+
+            </LinearLayout>
+
+            <!-- Recommendation -->
             <TextView
                 android:id="@+id/tvBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="#E0F7FA"
-                android:padding="12dp"
-                android:textAlignment="center"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/info_banner_bg"
+                android:gravity="center"
+                android:padding="14dp"
+                android:textColor="@color/info_text"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                tools:text="Lyft is $2.00 cheaper right now" />
+                tools:text="Historical estimates are very similar" />
 
-            <!-- Comparison Cards -->
+            <!-- Provider cards -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
-                <!-- Uber Card -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="#F0F0F0"
-                    android:gravity="center"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/card_surface"
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/uber" android:textStyle="bold" />
-                    <TextView android:id="@+id/tvUberPrice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp" tools:text="$20.00 – $24.00" />
-                    <TextView android:id="@+id/tvUberEta" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="ETA: 5 mins" />
-                    <Button android:id="@+id/btnUber" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/book_uber" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/uber"
+                        android:textColor="@color/headline"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvUberPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/headline"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        tools:text="$68.38" />
+
+                    <TextView
+                        android:id="@+id/tvUberEta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:minHeight="42dp"
+                        android:textColor="@color/muted"
+                        android:textSize="13sp"
+                        tools:text="Estimated range: $61.28 – $75.48" />
+
+                    <Button
+                        android:id="@+id/btnUber"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="12dp"
+                        android:backgroundTint="@color/primary"
+                        android:text="@string/book_uber"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
 
-                <!-- Lyft Card -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:background="#F0F0F0"
-                    android:gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/card_surface"
                     android:orientation="vertical"
                     android:padding="16dp">
 
@@ -91,66 +191,91 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/lyft"
+                        android:textColor="@color/headline"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/tvLyftPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        tools:text="$18.00 – $22.00" />
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/headline"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        tools:text="$69.13" />
+
                     <TextView
                         android:id="@+id/tvLyftEta"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="ETA: 7 mins" />
+                        android:layout_marginTop="6dp"
+                        android:minHeight="42dp"
+                        android:textColor="@color/muted"
+                        android:textSize="13sp"
+                        tools:text="Estimated range: $64.91 – $73.36" />
+
                     <Button
                         android:id="@+id/btnLyft"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/book_lyft" />
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="12dp"
+                        android:backgroundTint="@color/primary"
+                        android:text="@string/book_lyft"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
+
             </LinearLayout>
 
-            <!-- Feature Buttons -->
+            <!-- Feature actions -->
             <LinearLayout
-                style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnWaitSave"
-                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="54dp"
                     android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/wait_amp_save"
+                    android:layout_marginEnd="6dp"
                     android:backgroundTint="@color/secondary"
-                    android:textColor="@color/white" />
+                    android:text="@string/wait_amp_save"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnWalkNearby"
-                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="54dp"
                     android:layout_weight="1"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="6dp"
+                    android:backgroundTint="@color/secondary"
                     android:text="@string/walk_nearby"
-                    android:backgroundTint="@color/tertiary"
-                    android:textColor="@color/white" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
             </LinearLayout>
-            <!-- Disclaimer -->
+
             <TextView
                 android:id="@+id/tvDisclaimer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                tools:text="Demo estimates. Final fare shown in provider app." />
+                android:gravity="center"
+                android:text="Historical ML estimates only. Final prices appear in the provider app."
+                android:textColor="@color/muted"
+                android:textSize="12sp" />
+
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>
