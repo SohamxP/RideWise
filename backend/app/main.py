@@ -108,74 +108,47 @@ async def analyze_trip(
     request: AnalyzeTripRequest,
 ) -> AnalyzeTripResponse:
 
+    # Route information works nationwide through Google Routes.
     try:
-        route = await (
-            route_service.get_route(
-                pickup_lat=(
-                    request.pickup_lat
-                ),
-                pickup_lon=(
-                    request.pickup_lon
-                ),
-                dropoff_lat=(
-                    request.dropoff_lat
-                ),
-                dropoff_lon=(
-                    request.dropoff_lon
-                ),
-            )
+        route = await route_service.get_route(
+            pickup_lat=request.pickup_lat,
+            pickup_lon=request.pickup_lon,
+            dropoff_lat=request.dropoff_lat,
+            dropoff_lon=request.dropoff_lon,
         )
 
     except Exception as exc:
         raise HTTPException(
             status_code=502,
-            detail=(
-                f"Route lookup failed: "
-                f"{exc}"
-            ),
+            detail=f"Route lookup failed: {exc}",
         ) from exc
 
     now_nyc = datetime.now(
-        ZoneInfo(
-            "America/New_York"
-        )
+        ZoneInfo("America/New_York")
     )
 
-    prediction_request = (
-        FarePredictionRequest(
-            trip_miles=(
-                route["trip_miles"]
-            ),
-            trip_minutes=(
-                route["trip_minutes"]
-            ),
-            pickup_hour=(
-                now_nyc.hour
-            ),
-            day_of_week=(
-                now_nyc.weekday()
-            ),
-            pickup_lat=(
-                request.pickup_lat
-            ),
-            pickup_lon=(
-                request.pickup_lon
-            ),
-            dropoff_lat=(
-                request.dropoff_lat
-            ),
-            dropoff_lon=(
-                request.dropoff_lon
-            ),
-        )
+    prediction_request = FarePredictionRequest(
+        trip_miles=route["trip_miles"],
+        trip_minutes=route["trip_minutes"],
+        pickup_hour=now_nyc.hour,
+        day_of_week=now_nyc.weekday(),
+        pickup_lat=request.pickup_lat,
+        pickup_lon=request.pickup_lon,
+        dropoff_lat=request.dropoff_lat,
+        dropoff_lon=request.dropoff_lon,
     )
 
     try:
-        predictions = (
-            predictor.predict(
-                prediction_request
-            )
+        predictions = predictor.predict(
+            prediction_request
         )
+
+    except ValueError:
+        # The ML models are currently calibrated only for NYC.
+        # For trips outside supported NYC taxi zones, still return
+        # the real Google route so the Android app can degrade
+        # gracefully instead of failing the entire trip analysis.
+        predictions = []
 
     except RuntimeError as exc:
         raise HTTPException(
@@ -183,20 +156,10 @@ async def analyze_trip(
             detail=str(exc),
         ) from exc
 
-    except ValueError as exc:
-        raise HTTPException(
-            status_code=422,
-            detail=str(exc),
-        ) from exc
-
     return AnalyzeTripResponse(
         route=RouteInfo(
-            trip_miles=(
-                route["trip_miles"]
-            ),
-            trip_minutes=(
-                route["trip_minutes"]
-            ),
+            trip_miles=route["trip_miles"],
+            trip_minutes=route["trip_minutes"],
         ),
         predictions=predictions,
     )

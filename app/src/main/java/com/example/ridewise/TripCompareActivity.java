@@ -56,6 +56,8 @@ public class TripCompareActivity extends AppCompatActivity {
 
     private RouteInfo routeInfo;
 
+    private boolean farePredictionAvailable = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,6 +189,11 @@ public class TripCompareActivity extends AppCompatActivity {
         btnLyft.setEnabled(false);
         btnWaitSave.setEnabled(false);
         btnWalkNearby.setEnabled(false);
+
+        btnUber.setAlpha(0.5f);
+        btnLyft.setAlpha(0.5f);
+        btnWaitSave.setAlpha(0.5f);
+        btnWalkNearby.setAlpha(0.5f);
     }
 
     private void analyzeTrip() {
@@ -248,17 +255,26 @@ public class TripCompareActivity extends AppCompatActivity {
 
         routeInfo = response.getRoute();
 
+        if (routeInfo == null) {
+            showAnalysisError(
+                    "Route information was unavailable."
+            );
+            return;
+        }
+
         List<ProviderPrediction> predictions =
                 response.getPredictions();
 
-        if (routeInfo == null
-                || predictions == null
+        /*
+         * Empty prediction list means:
+         *
+         * Google routing succeeded, but the ML model
+         * does not support this geographic market.
+         */
+        if (predictions == null
                 || predictions.isEmpty()) {
 
-            showAnalysisError(
-                    "Incomplete trip analysis received."
-            );
-
+            showUnsupportedMarket();
             return;
         }
 
@@ -288,10 +304,69 @@ public class TripCompareActivity extends AppCompatActivity {
             return;
         }
 
-        updateUI();
+        farePredictionAvailable = true;
+
+        updatePredictionUI();
     }
 
-    private void updateUI() {
+    private void showUnsupportedMarket() {
+
+        farePredictionAvailable = false;
+
+        tvDistance.setText(
+                String.format(
+                        "Distance: %.1f mi",
+                        routeInfo.getTripMiles()
+                )
+        );
+
+        tvTime.setText(
+                String.format(
+                        "Traffic-aware time: %.0f mins",
+                        routeInfo.getTripMinutes()
+                )
+        );
+
+        tvBanner.setText(
+                "Historical fare prediction is currently available for NYC only"
+        );
+
+        tvUberPrice.setText(
+                "NYC only"
+        );
+
+        tvUberEta.setText(
+                "Open Uber to view the current provider fare"
+        );
+
+        tvLyftPrice.setText(
+                "NYC only"
+        );
+
+        tvLyftEta.setText(
+                "Open Lyft to view the current provider fare"
+        );
+
+        /*
+         * Provider apps still work nationwide.
+         */
+        btnUber.setEnabled(true);
+        btnLyft.setEnabled(true);
+
+        btnUber.setAlpha(1.0f);
+        btnLyft.setAlpha(1.0f);
+
+        /*
+         * These features depend on the NYC ML model.
+         */
+        btnWaitSave.setEnabled(false);
+        btnWalkNearby.setEnabled(false);
+
+        btnWaitSave.setAlpha(0.5f);
+        btnWalkNearby.setAlpha(0.5f);
+    }
+
+    private void updatePredictionUI() {
 
         tvDistance.setText(
                 String.format(
@@ -377,11 +452,18 @@ public class TripCompareActivity extends AppCompatActivity {
         btnLyft.setEnabled(true);
         btnWaitSave.setEnabled(true);
         btnWalkNearby.setEnabled(true);
+
+        btnUber.setAlpha(1.0f);
+        btnLyft.setAlpha(1.0f);
+        btnWaitSave.setAlpha(1.0f);
+        btnWalkNearby.setAlpha(1.0f);
     }
 
     private void showAnalysisError(
             String message
     ) {
+
+        farePredictionAvailable = false;
 
         tvBanner.setText(
                 "Trip analysis unavailable"
@@ -403,6 +485,11 @@ public class TripCompareActivity extends AppCompatActivity {
         btnWaitSave.setEnabled(false);
         btnWalkNearby.setEnabled(false);
 
+        btnUber.setAlpha(0.5f);
+        btnLyft.setAlpha(0.5f);
+        btnWaitSave.setAlpha(0.5f);
+        btnWalkNearby.setAlpha(0.5f);
+
         Toast.makeText(
                 this,
                 message,
@@ -414,14 +501,17 @@ public class TripCompareActivity extends AppCompatActivity {
 
         btnUber.setOnClickListener(v -> {
 
-            if (uberPrediction == null) {
-                return;
-            }
+            /*
+             * Save historical prediction only when one exists.
+             */
+            if (farePredictionAvailable
+                    && uberPrediction != null) {
 
-            saveRideToFirebase(
-                    RideProvider.UBER,
-                    uberPrediction.getEstimatedFare()
-            );
+                saveRideToFirebase(
+                        RideProvider.UBER,
+                        uberPrediction.getEstimatedFare()
+                );
+            }
 
             DeepLinkHelper.openUber(
                     TripCompareActivity.this,
@@ -431,14 +521,14 @@ public class TripCompareActivity extends AppCompatActivity {
 
         btnLyft.setOnClickListener(v -> {
 
-            if (lyftPrediction == null) {
-                return;
-            }
+            if (farePredictionAvailable
+                    && lyftPrediction != null) {
 
-            saveRideToFirebase(
-                    RideProvider.LYFT,
-                    lyftPrediction.getEstimatedFare()
-            );
+                saveRideToFirebase(
+                        RideProvider.LYFT,
+                        lyftPrediction.getEstimatedFare()
+                );
+            }
 
             DeepLinkHelper.openLyft(
                     TripCompareActivity.this,
@@ -447,6 +537,10 @@ public class TripCompareActivity extends AppCompatActivity {
         });
 
         btnWaitSave.setOnClickListener(v -> {
+
+            if (!farePredictionAvailable) {
+                return;
+            }
 
             Intent intent =
                     new Intent(
@@ -460,6 +554,10 @@ public class TripCompareActivity extends AppCompatActivity {
         });
 
         btnWalkNearby.setOnClickListener(v -> {
+
+            if (!farePredictionAvailable) {
+                return;
+            }
 
             Intent intent =
                     new Intent(
