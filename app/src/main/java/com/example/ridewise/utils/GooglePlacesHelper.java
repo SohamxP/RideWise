@@ -2,6 +2,8 @@ package com.example.ridewise.utils;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
@@ -10,75 +12,246 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class GooglePlacesHelper {
 
     private static final String TAG = "GooglePlacesHelper";
-    private PlacesClient placesClient;
-    private AutocompleteSessionToken token;
 
-    public GooglePlacesHelper(Context context, String apiKey) {
-        if (!Places.isInitialized()) {
-            Places.initialize(context, apiKey);
+    private final PlacesClient placesClient;
+
+    public GooglePlacesHelper(
+            Context context,
+            String apiKey
+    ) {
+
+        if (apiKey == null || apiKey.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Google Places API key is missing."
+            );
         }
-        placesClient = Places.createClient(context);
-        token = AutocompleteSessionToken.newInstance();
+
+        if (!Places.isInitialized()) {
+            Places.initializeWithNewPlacesApiEnabled(
+                    context.getApplicationContext(),
+                    apiKey
+            );
+        }
+
+        placesClient =
+                Places.createClient(
+                        context.getApplicationContext()
+                );
     }
 
     public interface LocationCallback {
-        void onLocationFound(LatLng location, String formattedAddress);
-        void onError(String error);
+
+        void onLocationFound(
+                LatLng location,
+                String formattedAddress
+        );
+
+        void onError(
+                String error
+        );
     }
 
-    /**
-     * Get coordinates from address/location name
-     */
-    public void getCoordinatesFromAddress(String query, LocationCallback callback) {
-        FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-                .setSessionToken(token)
-                .setQuery(query)
-                .build();
+    public void getCoordinatesFromAddress(
+            String query,
+            LocationCallback callback
+    ) {
 
-        placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
-            List<AutocompletePrediction> predictions = response.getAutocompletePredictions();
+        if (query == null
+                || query.trim().isEmpty()) {
 
-            if (predictions.isEmpty()) {
-                callback.onError("No locations found");
-                return;
-            }
-
-            // Get the first prediction
-            AutocompletePrediction prediction = predictions.get(0);
-            String placeId = prediction.getPlaceId();
-
-            // Fetch place details to get coordinates
-            List<Place.Field> placeFields = Arrays.asList(
-                    Place.Field.LAT_LNG,
-                    Place.Field.ADDRESS
+            callback.onError(
+                    "Location query is empty"
             );
 
-            FetchPlaceRequest fetchRequest = FetchPlaceRequest.builder(placeId, placeFields).build();
+            return;
+        }
 
-            placesClient.fetchPlace(fetchRequest).addOnSuccessListener((placeResponse) -> {
-                Place place = placeResponse.getPlace();
-                LatLng latLng = place.getLatLng();
-                String address = place.getAddress();
+        AutocompleteSessionToken token =
+                AutocompleteSessionToken
+                        .newInstance();
 
-                if (latLng != null) {
-                    callback.onLocationFound(latLng, address != null ? address : query);
-                } else {
-                    callback.onError("Could not get coordinates");
-                }
-            }).addOnFailureListener((exception) -> {
-                Log.e(TAG, "Place fetch failed: " + exception.getMessage());
-                callback.onError("Failed to get place details");
-            });
+        FindAutocompletePredictionsRequest request =
+                FindAutocompletePredictionsRequest
+                        .builder()
+                        .setSessionToken(token)
+                        .setQuery(
+                                query.trim()
+                        )
+                        .setCountries("US")
+                        .build();
 
-        }).addOnFailureListener((exception) -> {
-            Log.e(TAG, "Autocomplete failed: " + exception.getMessage());
-            callback.onError("Location search failed");
-        });
+        placesClient
+                .findAutocompletePredictions(request)
+                .addOnSuccessListener(
+                        response -> {
+
+                            List<AutocompletePrediction> predictions =
+                                    response.getAutocompletePredictions();
+
+                            if (predictions == null
+                                    || predictions.isEmpty()) {
+
+                                callback.onError(
+                                        "No matching locations found"
+                                );
+
+                                return;
+                            }
+
+                            AutocompletePrediction prediction =
+                                    predictions.get(0);
+
+                            fetchPlaceDetails(
+                                    prediction.getPlaceId(),
+                                    token,
+                                    query,
+                                    callback
+                            );
+                        }
+                )
+                .addOnFailureListener(
+                        exception -> {
+
+                            Log.e(
+                                    TAG,
+                                    "Autocomplete failed",
+                                    exception
+                            );
+
+                            callback.onError(
+                                    buildErrorMessage(
+                                            "Location search failed",
+                                            exception
+                                    )
+                            );
+                        }
+                );
+    }
+
+    private void fetchPlaceDetails(
+            String placeId,
+            AutocompleteSessionToken token,
+            String originalQuery,
+            LocationCallback callback
+    ) {
+
+        List<Place.Field> fields =
+                Arrays.asList(
+                        Place.Field.LOCATION,
+                        Place.Field.FORMATTED_ADDRESS,
+                        Place.Field.DISPLAY_NAME
+                );
+
+        FetchPlaceRequest request =
+                FetchPlaceRequest
+                        .builder(
+                                placeId,
+                                fields
+                        )
+                        .setSessionToken(token)
+                        .build();
+
+        placesClient
+                .fetchPlace(request)
+                .addOnSuccessListener(
+                        response -> {
+
+                            Place place =
+                                    response.getPlace();
+
+                            LatLng location =
+                                    place.getLocation();
+
+                            if (location == null) {
+
+                                callback.onError(
+                                        "Place has no coordinates"
+                                );
+
+                                return;
+                            }
+
+                            CharSequence formattedAddress =
+                                    place.getFormattedAddress();
+
+                            CharSequence displayName =
+                                    place.getDisplayName();
+
+                            String address;
+
+                            if (formattedAddress != null
+                                    && formattedAddress.length() > 0) {
+
+                                address =
+                                        formattedAddress.toString();
+
+                            } else if (displayName != null
+                                    && displayName.length() > 0) {
+
+                                address =
+                                        displayName.toString();
+
+                            } else {
+
+                                address =
+                                        originalQuery;
+                            }
+
+                            callback.onLocationFound(
+                                    location,
+                                    address
+                            );
+                        }
+                )
+                .addOnFailureListener(
+                        exception -> {
+
+                            Log.e(
+                                    TAG,
+                                    "Place details failed",
+                                    exception
+                            );
+
+                            callback.onError(
+                                    buildErrorMessage(
+                                            "Place details failed",
+                                            exception
+                                    )
+                            );
+                        }
+                );
+    }
+
+    private String buildErrorMessage(
+            String prefix,
+            Exception exception
+    ) {
+
+        if (exception instanceof ApiException) {
+
+            ApiException apiException =
+                    (ApiException) exception;
+
+            return prefix
+                    + " (code "
+                    + apiException.getStatusCode()
+                    + "): "
+                    + apiException.getMessage();
+        }
+
+        return prefix
+                + ": "
+                + (
+                    exception.getMessage() != null
+                            ? exception.getMessage()
+                            : "Unknown error"
+                );
     }
 }

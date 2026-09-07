@@ -1,0 +1,111 @@
+{
+  "provider": "uber",
+  "license_num": "HV0003",
+  "rows": 1127859,
+  "train_rows": 902287,
+  "test_rows": 225572,
+  "mae": 4.8954022887039175,
+  "rmse": 8.945994301187126,
+  "r2": 0.8348775205243639,
+  "median_absolute_error": 2.5435765075683587,
+  "error_80_percentile": 7.09986477661133,
+  "error_90_percentile": 11.667276779174802,
+  "target": "base_passenger_fare",
+  "features": [
+    "trip_miles",
+    "trip_minutes",
+    "average_speed_mph",
+    "pickup_hour",
+    "day_of_week",
+    "is_weekend",
+    "is_rush_hour",
+    "is_late_night",
+    "is_airport_trip",
+    "PULocationID",
+    "DOLocationID",
+    "route_pair"
+  ],
+  "feature_importance": [
+    {
+      "feature": "numeric__is_airport_trip",
+      "importance": 0.027772312983870506
+    },
+    {
+      "feature": "numeric__trip_miles",
+      "importance": 0.02767745964229107
+    },
+    {
+      "feature": "categorical__DOLocationID_265",
+      "importance": 0.01756970025599003
+    },
+    {
+      "feature": "categorical__DOLocationID_1",
+      "importance": 0.010275781154632568
+    },
+    {
+      "feature": "categorical__route_pair_infrequent_sklearn",
+      "importance": 0.009935572743415833
+    },
+    {
+      "feature": "numeric__trip_minutes",
+      "importance": 0.008316025137901306
+    },
+    {
+      "feature": "categorical__PULocationID_132",
+      "importance": 0.006260022055357695
+    },
+    {
+      "feature": "categorical__route_pair_138_230",
+      "importance": 0.005079102702438831
+    },
+    {
+      "feature": "categorical__route_pair_236_132",
+      "importance": 0.00498271593824029
+    },
+    {
+      "feature": "categorical__PULocationID_161",
+      "importance": 0.004954928997904062
+    },
+    {
+      "feature": "categorical__route_pair_132_237",
+      "importance": 0.004790758714079857
+    },
+    {
+      "feature": "categorical__route_pair_132_163",
+      "importance": 0.004237041343003511
+    },
+    {
+      "feature": "categorical__route_pair_230_265",
+      "importance": 0.004216827917844057
+    },
+    {
+      "feature": "categorical__PULocationID_211",
+      "importance": 0.00411097751930356
+    },
+    {
+      "feature": "categorical__PULocationID_163",
+      "importance": 0.004101434722542763
+    },
+    {
+      "feature": "categorical__PULocationID_234",
+      "importance": 0.004080825485289097
+    },
+    {
+      "feature": "categorical__PULocationID_261",
+      "importance": 0.004069831222295761
+    },
+    {
+      "feature": "categorical__DOLocationID_132",
+      "importance": 0.003985184710472822
+    },
+    {
+      "feature": "categorical__PULocationID_162",
+      "importance": 0.003960129804909229
+    },
+    {
+      "feature": "categorical__route_pair_161_265",
+      "importance": 0.003900339361280203
+    }
+  ],
+  "validation_strategy": "chronological_80_20_split"
+}
