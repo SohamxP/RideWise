@@ -2,20 +2,23 @@ package com.example.ridewise;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AuthActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
+
     private EditText emailInput;
     private EditText passwordInput;
+
     private Button loginBtn;
     private TextView signupLink;
 
@@ -26,8 +29,9 @@ public class AuthActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        // Check if already logged in
-        FirebaseUser currentUser = auth.getCurrentUser();
+        FirebaseUser currentUser =
+                auth.getCurrentUser();
+
         if (currentUser != null) {
             navigateToWelcome();
             return;
@@ -38,67 +42,143 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        emailInput = findViewById(R.id.emailInput);
-        passwordInput = findViewById(R.id.passwordInput);
-        loginBtn = findViewById(R.id.loginBtn);
-        signupLink = findViewById(R.id.signupLink);
+
+        emailInput =
+                findViewById(R.id.emailInput);
+
+        passwordInput =
+                findViewById(R.id.passwordInput);
+
+        loginBtn =
+                findViewById(R.id.loginBtn);
+
+        signupLink =
+                findViewById(R.id.signupLink);
     }
 
     private void setupClickListeners() {
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = emailInput.getText().toString().trim();
-                String password = passwordInput.getText().toString().trim();
 
-                if (validateInput(email, password)) {
-                    loginUser(email, password);
-                }
+        loginBtn.setOnClickListener(v -> {
+
+            String email =
+                    emailInput
+                            .getText()
+                            .toString()
+                            .trim();
+
+            String password =
+                    passwordInput
+                            .getText()
+                            .toString()
+                            .trim();
+
+            if (validateInput(
+                    email,
+                    password
+            )) {
+
+                loginUser(
+                        email,
+                        password
+                );
             }
         });
 
-        signupLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AuthActivity.this, SignupActivity.class);
-                startActivity(intent);
-            }
-        });
+        signupLink.setOnClickListener(v -> {
 
-        findViewById(R.id.googleBtn).setOnClickListener(v ->
-                Toast.makeText(this, "Google Sign-In coming soon", Toast.LENGTH_SHORT).show()
-        );
+            Intent intent =
+                    new Intent(
+                            AuthActivity.this,
+                            SignupActivity.class
+                    );
+
+            startActivity(intent);
+        });
     }
 
-    private boolean validateInput(String email, String password) {
+    private boolean validateInput(
+            String email,
+            String password
+    ) {
+
         if (email.isEmpty()) {
-            emailInput.setError("Email required");
+
+            emailInput.setError(
+                    "Email required"
+            );
+
+            emailInput.requestFocus();
+
             return false;
         }
-        if (password.isEmpty() || password.length() < 6) {
-            passwordInput.setError("Password must be at least 6 characters");
+
+        if (password.isEmpty()) {
+
+            passwordInput.setError(
+                    "Password required"
+            );
+
+            passwordInput.requestFocus();
+
             return false;
         }
+
+        if (password.length() < 6) {
+
+            passwordInput.setError(
+                    "Password must be at least 6 characters"
+            );
+
+            passwordInput.requestFocus();
+
+            return false;
+        }
+
         return true;
     }
 
-    private void loginUser(String email, String password) {
+    private void loginUser(
+            String email,
+            String password
+    ) {
+
         loginBtn.setEnabled(false);
         loginBtn.setText("Logging in...");
 
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener(authResult -> {
-                    navigateToWelcome();
-                })
+        auth.signInWithEmailAndPassword(
+                        email,
+                        password
+                )
+                .addOnSuccessListener(
+                        authResult ->
+                                navigateToWelcome()
+                )
                 .addOnFailureListener(e -> {
-                    Toast.makeText(AuthActivity.this, "Login failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(
+                            AuthActivity.this,
+                            "Login failed. Check your email and password.",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
                     loginBtn.setEnabled(true);
-                    loginBtn.setText("Login");
+                    loginBtn.setText("Log in");
                 });
     }
 
     private void navigateToWelcome() {
-        Intent intent = new Intent(this, WelcomePageActivity.class);
+
+        Intent intent =
+                new Intent(
+                        this,
+                        WelcomePageActivity.class
+                );
+
+        intent.setFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
+        );
+
         startActivity(intent);
         finish();
     }

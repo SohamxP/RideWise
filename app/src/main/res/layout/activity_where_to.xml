@@ -1,83 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:orientation="vertical"
+    android:background="@color/background">
 
-    <!-- MAIN FORM -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:navigationIcon="@android:drawable/ic_menu_revert"
+        android:layout_height="64dp"
+        android:background="@color/background"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:navigationIcon="@drawable/ic_arrow_back"
         app:title="@string/where_to"
-        app:titleTextColor="@color/primary" />
+        app:titleTextColor="@color/headline"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Title" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="24dp">
 
-            <!-- Pickup -->
-            <AutoCompleteTextView
-                android:id="@+id/pickupInput"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:hint="@string/enter_pickup_location"
-                android:drawableLeft="@android:drawable/ic_menu_mylocation"
-                android:drawablePadding="10dp"
-                android:padding="16dp"
-                android:background="@drawable/input_bg"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/muted"
-                android:inputType="text"
-                android:completionThreshold="0" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_surface"
+                android:padding="16dp">
 
-            <!-- Destination -->
-            <AutoCompleteTextView
-                android:id="@+id/destinationInput"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:hint="@string/enter_destination"
-                android:drawableLeft="@android:drawable/ic_menu_compass"
-                android:drawablePadding="10dp"
-                android:padding="16dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/input_bg"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/muted"
-                android:inputType="text"
-                android:completionThreshold="0" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pickup"
+                    android:textSize="13sp"
+                    android:textColor="@color/muted"
+                    android:textStyle="bold" />
 
-            <!-- Map Preview Placeholder -->
+                <AutoCompleteTextView
+                    android:id="@+id/pickupInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/enter_pickup_location"
+                    android:inputType="text"
+                    android:completionThreshold="0"
+                    android:singleLine="true"
+                    android:textColor="@color/headline"
+                    android:textColorHint="@color/subtle_text"
+                    android:textSize="17sp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Destination"
+                    android:textSize="13sp"
+                    android:textColor="@color/muted"
+                    android:textStyle="bold" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/destinationInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/enter_destination"
+                    android:inputType="text"
+                    android:completionThreshold="0"
+                    android:singleLine="true"
+                    android:textColor="@color/headline"
+                    android:textColorHint="@color/subtle_text"
+                    android:textSize="17sp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp" />
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="190dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/ic_map_placeholder"
                 android:gravity="center"
                 android:textColor="@color/muted"
                 android:textSize="16sp" />
 
-            <!-- COMPARE RIDES BUTTON -->
             <Button
                 android:id="@+id/compareRidesBtn"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/compare_rides"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:layout_height="56dp"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/primary"
-                android:textColor="@color/white" />
+                android:text="@string/compare_rides"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>

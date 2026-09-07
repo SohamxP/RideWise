@@ -69,7 +69,7 @@
     <string name="payment">Payment</string>
     <string name="payment_methods">Payment Methods</string>
     <string name="manage_your_payment_methods">Manage your payment methods</string>
-    <string name="ride_history">Ride History</string>
+    <string name="ride_history">Trip History</string>
     <string name="open_uber">Open Uber</string>
     <string name="open_lyft">Open Lyft</string>
     <string name="predictions_only_final_price_appears_in_the_provider_app">Predictions only; final price appears in the provider app.</string>
@@ -90,8 +90,8 @@
     <string name="savings" />
     <string name="october_26_2024">October 26, 2024</string>
     <string name="from_downtown_to_airport">From Downtown to Airport</string>
-    <string name="price_42_50">Price: $42.50</string>
-    <string name="saved_6_00">Saved: $6.00</string>
+    <string name="price_42_50">Predicted fare: $42.50</string>
+    <string name="saved_6_00">Estimated savings: $6.00</string>
     <string name="where_to">Where to?</string>
     <string name="create_account">Create Account</string>
     <string name="full_name">Full Name</string>
@@ -111,8 +111,8 @@
     <string name="smart_ride_comparison">Smart Ride Comparison</string>
     <string name="welcome_back_mark">Welcome back!</string>
     <string name="find_a_ride">Find a Ride</string>
-    <string name="view_ride_history">View Ride History</string>
-    <string name="compare_uber_lyft_amp_taxis"><![CDATA[✓ Compare Uber, Lyft & Taxis]]></string>
+    <string name="view_ride_history">View Trip History</string>
+    <string name="compare_uber_lyft_amp_taxis">Compare Uber and Lyft historical fare estimates</string>
     <string name="wait_amp_save_predictions"><![CDATA[✓ Wait & Save predictions]]></string>
     <string name="walk_nearby_suggestions">✓ Walk Nearby suggestions</string>
     <string name="track_your_savings">✓ Track your savings</string>

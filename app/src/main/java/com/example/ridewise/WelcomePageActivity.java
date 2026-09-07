@@ -37,7 +37,7 @@ public class WelcomePageActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        // Hide Home and Ride History from menu on this screen
+        // Hide Home and Trip History from menu on this screen
         MenuItem homeItem = menu.findItem(R.id.action_home);
         if (homeItem != null) {
             homeItem.setVisible(false);
