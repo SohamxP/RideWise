@@ -10,8 +10,6 @@ The project uses a native Android client, a FastAPI backend deployed on Google C
 
 ## App Screenshots
 
-## App Screenshots
-
 <p align="center">
   <img src="screenshots/Welcome.png" width="230" />
   <img src="screenshots/Compare Rides - NYC.png" width="230" />
